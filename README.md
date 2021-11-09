@@ -49,10 +49,8 @@ nginx-consul:
 ```nginx-consul
 http {
     upstream test {
-        # Consul没有开启ACL
-        upsync 127.0.0.1:8500/v1/kv/upstreams/test/ upsync_timeout=6m upsync_interval=500ms upsync_type=consul strong_dependency=off;
-        # Consul开启ACL
-        # upsync 127.0.0.1:8500/v1/kv/upstreams/test?token=具有操作kv权限的token upsync_timeout=6m upsync_interval=500ms upsync_type=consul strong_dependency=off;
+        # Consul必须开启ACL，否则无法使用
+        upsync 127.0.0.1:8500/v1/kv/upstreams/test?token=具有操作kv权限的token upsync_timeout=6m upsync_interval=500ms upsync_type=consul strong_dependency=off;
         upsync_dump_path /usr/local/nginx/conf/servers/servers_test.conf;
 
         include /usr/local/nginx/conf/servers/servers_test.conf;
